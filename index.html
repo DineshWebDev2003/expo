@@ -4,29 +4,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Registration</title>
+    <title>Drawing & Colouring Competition Registration</title>
     <link rel="stylesheet" href="style.css">
 
     <style>
-         body {
-            font-family: Arial, sans-serif;
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f9;
+            background-color: #fff7e6; /* light warm background */
         }
 
         .form-container {
-            max-width: 600px;
+            max-width: 650px;
             margin: 20px auto;
             padding: 20px;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background: #ffffff;
+            border-radius: 12px;
+            border: 3px solid #ffcc66;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
         h1 {
             text-align: center;
-            color: #333;
+            color: #ff6600; /* bright orange title */
+            margin-bottom: 5px;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 20px;
         }
 
         .form-group {
@@ -37,18 +46,27 @@
             display: block;
             font-weight: bold;
             margin-bottom: 5px;
+            color: #333366;
         }
 
         .form-group input[type="text"],
         .form-group input[type="number"],
         .form-group input[type="tel"],
-        .form-group select,
-        .form-group input[type="checkbox"] {
+        .form-group select {
             width: 100%;
-            padding: 8px;
+            padding: 10px;
             margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            border: 2px solid #99ccff;
+            border-radius: 6px;
+            background-color: #f9fcff;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #3399ff;
+            outline: none;
+            background-color: #e6f3ff;
         }
 
         .checkbox-group div {
@@ -63,63 +81,76 @@
 
         button {
             width: 100%;
-            padding: 10px;
-            background: #007bff;
+            padding: 12px;
+            background: linear-gradient(90deg, #ff9933, #ff6600);
             color: white;
+            font-weight: bold;
+            font-size: 1.1rem;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
+            transition: transform 0.2s ease, background 0.3s ease;
         }
 
         button:hover {
-            background: #0056b3;
+            background: linear-gradient(90deg, #ff6600, #cc5200);
+            transform: scale(1.03);
         }
 
         #result {
             margin-top: 15px;
             text-align: center;
+            font-weight: bold;
+            color: #008000;
         }
     </style>
-   
+
 </head>
 
 <body>
 
     <div class="form-container">
-        <h1>Student Registration</h1>
-        <form action="https://api.web3forms.com/submit" method="POST">  
+        <h1>🎨 Drawing & Colouring Competition</h1>
+        <h2>Registration Form</h2>
+        <form action="https://api.web3forms.com/submit" method="POST" id="form">  
             <input type="hidden" name="access_key" value="a29e21a8-f2cd-4128-900c-aacea753aafc">          
+            
             <!-- Student Name -->
             <div class="form-group">
-                <label for="studentName">Student Name</label>
-                <input type="text" id="studentName" name="studentName" required>
+                <label for="studentName">Participant Name</label>
+                <input type="text" id="studentName" name="studentName" placeholder="Enter participant's full name" required>
             </div>
 
             <!-- Student Age -->
             <div class="form-group">
-                <label for="studentAge">Student Age</label>
-                <input type="number" id="studentAge" name="studentAge" required>
+                <label for="studentAge">Participant Age</label>
+                <input type="number" id="studentAge" name="studentAge" placeholder="Enter age" required>
             </div>
 
-<!-- Student participation -->
+            <!-- Participation Category -->
             <div class="form-group">
-                <label for="studentparticipation">Student participation</label>
-                <input type="text" id="studentparticipation" name="student participation" required>
+                <label for="studentparticipation">Competition Category</label>
+                <select id="studentparticipation" name="student participation" required>
+                    <option value="">-- Select Category --</option>
+                    <option value="Drawing">Drawing</option>
+                    <option value="Colouring">Colouring</option>
+                    <option value="Both">Both</option>
+                </select>
             </div>
 
             <!-- Parent Name -->
             <div class="form-group">
-                <label for="parentName">Parent Name</label>
-                <input type="text" id="parentName" name="parentName" required>
+                <label for="parentName">Parent/Guardian Name</label>
+                <input type="text" id="parentName" name="parentName" placeholder="Enter parent's full name" required>
             </div>
 
             <!-- Sibling Checkbox -->
             <div class="form-group checkbox-group">
-                <label for="hasSibling">Does the student have siblings?</label>
+                <label for="hasSibling">Does the participant have siblings joining?</label>
                 <input type="checkbox" id="hasSibling" name="hasSibling">
             </div>
 
-            <!-- Sibling Details (Hidden by default) -->
+            <!-- Sibling Details -->
             <div id="siblingDetails" style="display: none;">
                 <div class="form-group">
                     <label for="siblingName">Sibling Name</label>
@@ -130,72 +161,75 @@
                     <input type="number" id="siblingAge" name="siblingAge">
                 </div>
                 <div class="form-group">
-                    <label for="competitionParticipation">Is the sibling participating in the competition?</label>
+                    <label for="competitionParticipation">Sibling Competition Category</label>
                     <select id="competitionParticipation" name="competitionParticipation">
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
+                        <option value="">-- Select Category --</option>
+                        <option value="Drawing">Drawing</option>
+                        <option value="Colouring">Colouring</option>
+                        <option value="Both">Both</option>
                     </select>
                 </div>
             </div>
 
             <!-- Parent Phone Number -->
             <div class="form-group">
-                <label for="parentPhone">Parent Phone Number</label>
-                <input type="tel" id="parentPhone" name="parentPhone" required>
+                <label for="parentPhone">Parent Contact Number</label>
+                <input type="tel" id="parentPhone" name="parentPhone" placeholder="Enter 10-digit mobile number" required>
             </div>
 
             <!-- Submit Button -->
-            <button type="submit" class="form-btn">Submit</button>
+            <button type="submit" class="form-btn">Submit Registration</button>
             <div id="result"></div>
         </form>
     </div>
 
     <script>
-        // Show/Hide sibling details based on the checkbox
         document.getElementById('hasSibling').addEventListener('change', function() {
             const siblingDetails = document.getElementById('siblingDetails');
             siblingDetails.style.display = this.checked ? 'block' : 'none';
         });
 
-      
         const form = document.getElementById('form');
-const result = document.getElementById('result');
+        const result = document.getElementById('result');
 
-form.addEventListener('submit', function(e) {
-  e.preventDefault();
-  const formData = new FormData(form);
-  const object = Object.fromEntries(formData);
-  const json = JSON.stringify(object);
-  result.innerHTML = "Please wait..."
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const object = Object.fromEntries(formData);
+            const json = JSON.stringify(object);
+            result.innerHTML = "Please wait...";
 
-    fetch('https://api.web3forms.com/submit', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: json
-        })
-        .then(async (response) => {
-            let json = await response.json();
-            if (response.status == 200) {
-                result.innerHTML = "Form submitted successfully";
-            } else {
-                console.log(response);
-                result.innerHTML = json.message;
-            }
-        })
-        .catch(error => {
-            console.log(error);
-            result.innerHTML = "Something went wrong!";
-        })
-        .then(function() {
-            form.reset();
-            setTimeout(() => {
-                result.style.display = "none";
-            }, 3000);
+            fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: json
+            })
+            .then(async (response) => {
+                let json = await response.json();
+                if (response.status == 200) {
+                    result.innerHTML = "🎉 Registration submitted successfully!";
+                    result.style.color = "green";
+                } else {
+                    console.log(response);
+                    result.innerHTML = json.message;
+                    result.style.color = "red";
+                }
+            })
+            .catch(error => {
+                console.log(error);
+                result.innerHTML = "❌ Something went wrong!";
+                result.style.color = "red";
+            })
+            .then(function() {
+                form.reset();
+                setTimeout(() => {
+                    result.style.display = "none";
+                }, 3000);
+            });
         });
-});
     </script>
 
 </body>
